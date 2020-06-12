@@ -108,6 +108,7 @@ nbproject
 .buildpath
 .project
 .settings
+/config/params.php
 
 # windows thumbnail cache
 Thumbs.db
