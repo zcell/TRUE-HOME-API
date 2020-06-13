@@ -25,7 +25,7 @@ class FeedMessageSearch extends FeedMessage
 
     public function search(){
         $query = static::find();
-        $query->with(['files','linked']);
+        $query->with(['files','linked','author']);
         $query->orderBy('created_at desc');
         if ($this->from_id!==null){
             $query->where(['<','id',$this->from_id]);

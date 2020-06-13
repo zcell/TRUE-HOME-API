@@ -92,6 +92,8 @@ class AuthController extends BaseController
                 'role'        => UserRoleEnum::getName($me->role),
                 'status'      => UserStatusEnum::getName($me->status),
                 'avatar'      => (empty($me->avatar)) ? '' : \yii\helpers\Url::to($me->avatar),
+                'isResident'  => $me->role === UserRoleEnum::ROLE_RESIDENT,
+                'isHousing'   => $me->role === UserRoleEnum::ROLE_HOUSING_WORKER,
             ],
         ];
     }
