@@ -70,7 +70,9 @@ class S3 extends Component
 
     public function uploadFile(string $filepath, string $name, string $directory = 'temporary')
     {
+
         $fileMime = FileHelper::getMimeType($filepath);
+        $fileSize = filesize($filepath);
         $this->getClient()->putObject(
             [
                 'Bucket'      => $this->bucket,
@@ -81,6 +83,18 @@ class S3 extends Component
             ]
         );
 
-        return [$directory . '/' . $name,$fileMime];
+        return [$directory . '/' . $name, $fileMime, $fileSize];
+    }
+
+    public function copyFile(string $fileFrom, string $fileTo)
+    {
+
+        $this->getClient()->copy(
+            $this->bucket,
+            $fileFrom,
+            $this->bucket,
+            $fileTo,
+            'public-read'
+        );
     }
 }

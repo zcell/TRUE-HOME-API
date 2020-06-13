@@ -19,12 +19,13 @@ class CommonController extends BaseController
             $filename = mt_rand() . '__' . $file->name;
             /** @var S3 $s3 */
             $s3 = \Yii::$app->get('s3');
-            [$path,$fileMime] = $s3->uploadFile($file->tempName, $filename);
+            [$path,$fileMime,$fileSize] = $s3->uploadFile($file->tempName, $filename);
 
             return [
                 'fileName' => $file->name,
                 'filePath' => '/s3/' . $path,
-                'fileType'=>$fileMime
+                'fileType'=>$fileMime,
+                'fileSize'=>$fileSize
             ];
         }
 
