@@ -79,6 +79,10 @@ class AuthController extends BaseController
 
         /** @var User $me */
         $me = \Yii::$app->user->identity;
+        $ukName = '';
+        if ($me->role == UserRoleEnum::ROLE_HOUSING_WORKER) {
+            $ukName = $me->house->housing->name;
+        }
 
         return [
             'success' => true,
@@ -92,6 +96,7 @@ class AuthController extends BaseController
                 'role'        => UserRoleEnum::getName($me->role),
                 'status'      => UserStatusEnum::getName($me->status),
                 'avatar'      => (empty($me->avatar)) ? '' : \yii\helpers\Url::to($me->avatar),
+                'ukName'      => $ukName,
                 'isResident'  => $me->role === UserRoleEnum::ROLE_RESIDENT,
                 'isHousing'   => $me->role === UserRoleEnum::ROLE_HOUSING_WORKER,
             ],

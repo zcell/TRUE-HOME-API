@@ -5,6 +5,8 @@ namespace app\controllers\v1;
 
 
 use app\models\Integration\S3;
+use app\models\Search\HouseSearch;
+use app\models\Search\UserSearch;
 use yii\web\UploadedFile;
 
 class CommonController extends BaseController
@@ -32,5 +34,17 @@ class CommonController extends BaseController
         \Yii::$app->response->statusCode = 422;
 
         return 'error on save';
+    }
+
+    public function actionHouses(){
+        $entity = new HouseSearch();
+        $entity->load(\Yii::$app->request->get(),'');
+        return $entity->search();
+    }
+
+    public function actionUsers(){
+        $search = new UserSearch();
+        $search->load(\Yii::$app->request->get(),'');
+        return $search->search();
     }
 }

@@ -27,6 +27,7 @@ use yii\db\ActiveRecord;
  * @property-read User $author
  * @property-read FeedLinks[] $links
  * @property-read FeedMessage[] $linked
+ * @property-read Poll $poll
  */
 class FeedMessage extends ActiveRecord
 {
@@ -42,7 +43,7 @@ class FeedMessage extends ActiveRecord
             [
                 'class'     => SaveRelationBehavior::class,
                 'relations' => [
-                    'files','links'
+                    'files','links','poll'
                 ],
             ]
         ];
@@ -60,12 +61,13 @@ class FeedMessage extends ActiveRecord
         return [
           [['title','text'],'string'],
           [['title','text','visibility','type'],'required'],
+          ['status','integer'],
           [['due_date','start_date','visibility','type'],'integer'],
           ['visibility','in','range'=>array_keys(FeedVisibilityEnum::getNames())],
           ['type','in','range'=>array_keys(FeedTypeEnum::getNames())],
           ['author_id','default','value'=>\Yii::$app->user->id],
 
-          [['files','links'],'safe']
+          [['files','links','poll'],'safe']
         ];
     }
 
@@ -86,5 +88,21 @@ class FeedMessage extends ActiveRecord
 
     public function getLinked(){
         return $this->hasMany(static::class,['id'=>'link_id'])->viaTable('{{%feed_links}}',['feed_id'=>'id']);
+    }
+
+    public function getPoll(){
+        return $this->hasMany(Poll::class,['feed_id'=>'id']);
+    }
+
+    public function getLikes(){
+        return $this->hasMany(FeedLike::class,['feed_id'=>'id']);
+    }
+
+    public function getDislikes(){
+        return $this->hasMany(FeedDislike::class,['feed_id'=>'id']);
+    }
+
+    public function getComments(){
+        return $this->hasMany(Comments::class,['feed_id'=>'id'])->orderBy('created_at desc');
     }
 }

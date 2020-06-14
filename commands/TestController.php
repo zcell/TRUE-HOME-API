@@ -12,18 +12,12 @@ class TestController extends Controller
 
     public function actionTest()
     {
+        $message = 'Здравствуйте, ваш пароль: '.'213ads';
+        $message = urlencode($message);
+        $login=\Yii::$app->params['smslogin'];
+        $pass=\Yii::$app->params['smspass'];
+        $phone='8'.mb_substr('79011094788',1);
 
-
-
-        /** @var \Aws\S3\S3Client $s3 */
-        $s3 = \Yii::$app->get('s3')->client;
-        $s3->putObject(
-            [
-                'Bucket'=>'true-home-public-bucket',
-                'Key'  => 'test.md',
-                'Body' => file_get_contents('README.md'),
-            ]
-        );
     }
 
     public function actionTestmove(){

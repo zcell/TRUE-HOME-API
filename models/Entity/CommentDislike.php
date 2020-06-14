@@ -8,7 +8,7 @@ use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 
 /**
- * Class FeedLike
+ * Class FeedDislike
  *
  * @package app\models\Entity
  * @property int $id         [int(11)]
@@ -17,15 +17,13 @@ use yii\db\ActiveRecord;
  * @property int $created_at [int(11)]
  * @property int $updated_at [int(11)]
  */
-class FeedLike extends ActiveRecord
+class CommentDislike extends ActiveRecord
 {
-
     public static function tableName()
     {
 
-        return '{{%feed_like}}';
+        return 'comment_dislikes';
     }
-
     public function behaviors()
     {
 
@@ -40,14 +38,14 @@ class FeedLike extends ActiveRecord
     {
 
         return [
-            [['author_id', 'feed_id'],'integer'],
+            [['author_id', 'comment_id'],'integer'],
             ['author_id','default','value'=>\Yii::$app->user->id],
             [
-                'feed_id',
+                'comment_id',
                 'exist',
                 'skipOnError'     => false,
-                'targetClass'     => FeedMessage::class,
-                'targetAttribute' => ['feed_id' => 'id'],
+                'targetClass'     => Comments::class,
+                'targetAttribute' => ['comment_id' => 'id'],
                 'message'         => 'Пост не найден',
             ],
             [

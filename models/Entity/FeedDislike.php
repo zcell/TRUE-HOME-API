@@ -8,7 +8,7 @@ use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 
 /**
- * Class FeedLike
+ * Class FeedDislike
  *
  * @package app\models\Entity
  * @property int $id         [int(11)]
@@ -17,15 +17,13 @@ use yii\db\ActiveRecord;
  * @property int $created_at [int(11)]
  * @property int $updated_at [int(11)]
  */
-class FeedLike extends ActiveRecord
+class FeedDislike extends ActiveRecord
 {
-
     public static function tableName()
     {
 
-        return '{{%feed_like}}';
+        return 'feed_dislike';
     }
-
     public function behaviors()
     {
 

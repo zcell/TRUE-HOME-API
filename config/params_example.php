@@ -10,5 +10,7 @@ return [
         'region'   => '',
         'endpoint' => '',
         'bucket'   => '',
-    ]
+    ],
+    'smslogin'=>'',
+    'smspass'=>''
 ];
